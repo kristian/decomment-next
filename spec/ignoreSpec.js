@@ -1,31 +1,29 @@
-'use strict';
-
 // Tests for 'ignore' option;
 
-const decomment = require('../lib');
-const os = require('os');
+import decomment from '../lib/index.js';
+import os from 'os';
 const LB = os.EOL;
 
 describe('Ignore:', function () {
 
-    describe('invalid values', function () {
+    it('invalid values', function () {
         expect(decomment('text', {ignore: true})).toBe('text');
         expect(decomment('text', {ignore: []})).toBe('text');
         expect(decomment('text', {ignore: [1, 2]})).toBe('text');
     });
 
     describe('single-line', function () {
-        describe('one occurrence', function () {
+        it('one occurrence', function () {
             expect(decomment('remove(//text)', {ignore: /remove\(/})).toBe('remove(');
             expect(decomment('skip(//text)', {ignore: [/skip\([/\w]*\)/]})).toBe('skip(//text)');
         });
-        describe('multi-occurrence', function () {
+        it('multi-occurrence', function () {
             expect(decomment('remove(//some), remove(//long), remove(//text)', {ignore: /remove\(/g})).toBe('remove(');
             expect(decomment('skip(//some), skip(//long), skip(//text)', {ignore: /skip\([/\w]*\)/g})).toBe('skip(//some), skip(//long), skip(//text)');
         });
     });
 
-    describe('CSS url', function () {
+    it('CSS url', function () {
         var input =
             '@font-face {' + LB +
             'font-family: octicons-link;// comments' + LB +
@@ -41,7 +39,7 @@ describe('Ignore:', function () {
         expect(decomment.text(input, {ignore: /url\([\w\s:/=\-+;,]*\)/g})).toBe(output);
     });
 
-    describe('HTML', function () {
+    it('HTML', function () {
         var input =
             '<!--keep' + LB +
             'me here' + LB +
@@ -56,7 +54,7 @@ describe('Ignore:', function () {
         expect(decomment.html(' <!--keep-->', {ignore: /<!--keep[\w\s]*-->/g})).toBe(' <!--keep-->');
     });
 
-    describe('jsDoc', function () {
+    it('jsDoc', function () {
         var input =
             '/* remove this */' + LB +
             '/**' + LB +
@@ -74,7 +72,7 @@ describe('Ignore:', function () {
         expect(decomment(' /**' + LB + 'text */', {ignore: regEx})).toBe(' /**' + LB + 'text */');
     });
 
-    describe('one-line', function () {
+    it('one-line', function () {
         expect(decomment('//comment', {ignore: /\/\/\w*/})).toBe('//comment');
         expect(decomment(' //comment', {ignore: /\/\/\w*/})).toBe(' //comment');
     });

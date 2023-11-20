@@ -1,12 +1,24 @@
-decomment
-=========
+decomment-next
+==============
+
+A fork of [decomment] similar to [esprima-next] being a fork of [esprima].
 
 Removes comments from JSON/JavaScript, CSS/HTML, CPP/H, etc.
+
+## Changes to the original decomment:
+
+- Rename to decomment-next
+- Uses [esprima-next] instead of [esprima]
+- Change to using ES6 module format
+- Removing `package-lock.json` from `.gitignore`
+- Remove `getEOL` export, which didn't fit in the library in the first place
+- Remove support for Node <= 12
+- Switch from `jamsine-node` to `jasmine`
 
 ## Installing
 
 ```
-$ npm i decomment
+$ npm i decomment-next
 ```
 
 ## Testing
@@ -24,14 +36,12 @@ $ npm run coverage
 ## Usage
 
 ```js
-const decomment = require('decomment');
+import decomment from 'decomment-next';
 
 const code = 'var t; // comments';
 
 decomment(code); //=> var t;
 ```
-
-For build systems / task runners see [gulp-decomment] and [grunt-decomment].
 
 ## Features
 
@@ -74,7 +84,7 @@ If [esprima] fails to validate the code, it will throw a parsing error. When suc
 Example:
 
 ```js
-const decomment = require('decomment');
+import decomment from 'decomment-next';
 const code = '/*! special */ var a; /* normal */';
 decomment(code); //=> var a;
 decomment(code, {safe: true}); //=> /*! special */ var a;
@@ -115,7 +125,7 @@ the original line + column position of every code element.
 Example:
 
 ```js
-const decomment = require('decomment');
+import decomment from 'decomment-next';
 const code = 'var a/*text*/, b';
 decomment(code); //=> var a, b
 decomment(code, {space: true}); //=> var a        , b
@@ -131,7 +141,7 @@ NOTE: When this option is enabled, option `trim` is ignored.
 Example:
 
 ```js
-const decomment = require('decomment');
+import decomment from 'decomment-next';
 const code = '/* comment */\r\n\r\n var test = 123';
 decomment(code); //=> \r\n var test = 123
 decomment(code, {trim: true}); //=> var test = 123
@@ -148,7 +158,7 @@ NOTE: This option has no effect when option `space` is enabled.
 Example:
 
 ```js
-const decomment = require('decomment');
+import decomment from 'decomment-next';
 const code = '/* comment */\r\n\r\n@Injectable()\r\nexport class HeroService {}';
 decomment(code); //=> Error: 'Unexpected token ILLEGAL'
 decomment(code, {tolerant: true}); //=> @Injectable()\r\nexport class HeroService {}
@@ -166,7 +176,7 @@ such as: `.CSS`, `.CPP`, `.H`, etc.
 Example:
 
 ```js
-const decomment = require('decomment');
+import decomment from 'decomment-next';
 const text = '.my-class{color:Red;}// comments';
 decomment.text(text); //=> .my-class{color:Red;}
 ```
@@ -180,21 +190,12 @@ Unlike the default **decomment** method, it instructs the library not to parse
 or validate the input in any way, rather assume it to be HTML, and remove all
 `<!-- comment -->` entries from it according to the `options`.
 
-### decomment.getEOL(text) ⇒ String
-
-Returns End-of-Line string used within the `text`, based on the occurrence frequency:
-
-* `\n` - for Unix-encoded text
-* `\r\n` - for Windows-encoded text
-
-When impossible to conclude (the same or 0 occurrence), it returns the default End-of-Line
-for the current OS.
-
 ## License
 
-Copyright © 2021 [Vitaly Tomilov](https://github.com/vitaly-t);
+Copyright © 2023 [Kristian Kraljic](https://kra.lc);
+Original [decomment] Copyright © 2021 [Vitaly Tomilov](https://github.com/vitaly-t);
 Released under the MIT license.
 
+[decomment]:https://github.com/vitaly-t/decomment
 [esprima]:https://github.com/jquery/esprima
-[grunt-decomment]:https://github.com/vitaly-t/grunt-decomment
-[gulp-decomment]:https://github.com/vitaly-t/gulp-decomment
+[esprima-next]:https://github.com/node-projects/esprima-next

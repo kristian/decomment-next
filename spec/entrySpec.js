@@ -1,8 +1,6 @@
-'use strict';
-
 // Entry tests;
 
-const decomment = require('../lib');
+import decomment from '../lib/index.js';
 
 describe('Entry:', function () {
 

@@ -1,9 +1,7 @@
-'use strict';
-
 // Tests for multi-line comments;
 
-const decomment = require('../lib');
-const os = require('os');
+import decomment from '../lib/index.js';
+import os from 'os';
 const LB = os.EOL;
 
 describe('Multi:', function () {
